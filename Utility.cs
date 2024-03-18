@@ -116,7 +116,7 @@ namespace MatchZy
                 }
                 if (unreadyPlayers.Count > 0) {
                     string unreadyPlayerList = string.Join(", ", unreadyPlayers);
-                    string minimumReadyRequiredMessage = isMatchSetup ? "" : $"[最少需要{ChatColors.Green}{minimumReadyRequired}{ChatColors.Default}名已准备的玩家]";
+                    string minimumReadyRequiredMessage = isMatchSetup ? "" : $"[最少需要{ChatColors.Green}{minimumReadyRequired}{ChatColors.Default}名玩家准备]";
 
                     Server.PrintToChatAll($"{chatPrefix} 未准备的玩家: {ChatColors.Green}{unreadyPlayerList}{ChatColors.Default} 输入 {ChatColors.Green}.ready{ChatColors.Default} 来准备！ {minimumReadyRequiredMessage}");
                 } else {
@@ -127,7 +127,7 @@ namespace MatchZy
                     }
                     else
                     {
-                        Server.PrintToChatAll($"{chatPrefix} 最少需要{ChatColors.Green}{minimumReadyRequired}{ChatColors.Default}名已准备的玩家，当前已有{ChatColors.Green}{countOfReadyPlayers}{ChatColors.Default}名玩家准备。");
+                        Server.PrintToChatAll($"{chatPrefix} 最少需要{ChatColors.Green}{minimumReadyRequired}{ChatColors.Default}名玩家准备，当前已有{ChatColors.Green}{countOfReadyPlayers}{ChatColors.Default}名玩家准备。");
                     }
                 }
             }
