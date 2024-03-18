@@ -123,11 +123,11 @@ namespace MatchZy
                     int countOfReadyPlayers = playerReadyStatus.Count(kv => kv.Value == true);
                     if (isMatchSetup)
                     {
-                        Server.PrintToChatAll($"{chatPrefix} 当前已准备的玩家数：{ChatColors.Green}{countOfReadyPlayers}{ChatColors.Default}");
+                        Server.PrintToChatAll($"{chatPrefix} 当前已有{ChatColors.Green}{countOfReadyPlayers}{ChatColors.Default}名玩家准备。");
                     }
                     else
                     {
-                        Server.PrintToChatAll($"{chatPrefix} 最少需要{ChatColors.Green}{minimumReadyRequired}{ChatColors.Default}名已准备的玩家，当前已准备的玩家数: {ChatColors.Green}{countOfReadyPlayers}{ChatColors.Default}");
+                        Server.PrintToChatAll($"{chatPrefix} 最少需要{ChatColors.Green}{minimumReadyRequired}{ChatColors.Default}名已准备的玩家，当前已有{ChatColors.Green}{countOfReadyPlayers}{ChatColors.Default}名玩家准备。");
                     }
                 }
             }
