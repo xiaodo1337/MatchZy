@@ -135,15 +135,15 @@ namespace MatchZy
             }
 
             if (matchZyCoachTeam.coach != null) {
-                ReplyToUserCommand(player, "Coach slot for this team has been already taken!");
+                ReplyToUserCommand(player, "此队伍的教练位已被占用!");
                 return;
             }
 
             matchZyCoachTeam.coach = player;
-            player.Clan = $"[{matchZyCoachTeam.teamName} COACH]";
+            player.Clan = $"[{matchZyCoachTeam.teamName} 教练]";
             if (player.InGameMoneyServices != null) player.InGameMoneyServices.Account = 0;
-            ReplyToUserCommand(player, $"You are now coaching {matchZyCoachTeam.teamName}! Use .uncoach to stop coaching");
-            Server.PrintToChatAll($"{chatPrefix} {ChatColors.Green}{player.PlayerName}{ChatColors.Default} is now coaching {ChatColors.Green}{matchZyCoachTeam.teamName}{ChatColors.Default}!");
+            ReplyToUserCommand(player, $"你现在正在教导 {matchZyCoachTeam.teamName}! 输入 .uncoach 来停止教导！");
+            Server.PrintToChatAll($"{chatPrefix} {ChatColors.Green}{player.PlayerName}{ChatColors.Default} 现在正在教导 {ChatColors.Green}{matchZyCoachTeam.teamName}{ChatColors.Default}!");
         }
 
         public void HandleCoaches() 

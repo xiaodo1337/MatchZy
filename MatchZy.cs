@@ -317,7 +317,7 @@ namespace MatchZy
                     if (victim.IsBot) {
                         int damage = @event.DmgHealth;
                         int postDamageHealth = @event.Health;
-                        @event.Attacker.PrintToChat($"{chatPrefix} {damage} damage to BOT {victim.PlayerName}({postDamageHealth} health)");
+                        @event.Attacker.PrintToChat($"{chatPrefix} {damage} 伤害到了BOT {victim.PlayerName}({postDamageHealth} HP)");
                     }
                     return HookResult.Continue;
                 }
@@ -529,7 +529,7 @@ namespace MatchZy
                 if (@event.Attacker.IsValid && player.SteamID != @event.Attacker.SteamID)
                 {
                     double roundedBlindDuration = Math.Round(@event.BlindDuration, 2);
-                    @event.Attacker.PrintToChat($"{chatPrefix} Flashed {@event.Userid.PlayerName}. Blind time: {roundedBlindDuration} seconds");
+                    @event.Attacker.PrintToChat($"{chatPrefix} 闪到了 {@event.Userid.PlayerName}. 被闪时间: {roundedBlindDuration} 秒");
                 }
                 var userId = player.UserId;
                 if (userId != null && noFlashList.Contains((int)userId))

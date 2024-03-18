@@ -280,7 +280,7 @@ public partial class MatchZy
         if (!isPractice || isDryRun) return HookResult.Continue;
         if(lastGrenadeThrownTime.TryGetValue(@event.Entityid, out var thrownTime)) 
         {
-            PrintToPlayerChat(@event.Userid, $"Smoke thrown by {@event.Userid.PlayerName} took {(DateTime.Now - thrownTime).TotalSeconds:0.00}s to detonate");
+            PrintToPlayerChat(@event.Userid, $"{@event.Userid.PlayerName}投掷了烟雾弹 引爆时间: {(DateTime.Now - thrownTime).TotalSeconds:0.00}秒");
             lastGrenadeThrownTime.Remove(@event.Entityid);
         }
         return HookResult.Continue;
@@ -291,7 +291,7 @@ public partial class MatchZy
         if (!isPractice || isDryRun) return HookResult.Continue;
         if(lastGrenadeThrownTime.TryGetValue(@event.Entityid, out var thrownTime)) 
         {
-            PrintToPlayerChat(@event.Userid, $"Flash thrown by {@event.Userid.PlayerName} took {(DateTime.Now - thrownTime).TotalSeconds:0.00}s to detonate");
+            PrintToPlayerChat(@event.Userid, $"{@event.Userid.PlayerName}投掷了闪光弹 引爆时间: {(DateTime.Now - thrownTime).TotalSeconds:0.00}秒");
             lastGrenadeThrownTime.Remove(@event.Entityid);
         }
         return HookResult.Continue;
@@ -302,7 +302,7 @@ public partial class MatchZy
         if (!isPractice || isDryRun) return HookResult.Continue;
         if(lastGrenadeThrownTime.TryGetValue(@event.Entityid, out var thrownTime)) 
         {
-            PrintToPlayerChat(@event.Userid, $"Grenade thrown by {@event.Userid.PlayerName} took {(DateTime.Now - thrownTime).TotalSeconds:0.00}s to detonate");
+            PrintToPlayerChat(@event.Userid, $"{@event.Userid.PlayerName}投掷了手榴弹 引爆时间:  {(DateTime.Now - thrownTime).TotalSeconds:0.00}秒");
             lastGrenadeThrownTime.Remove(@event.Entityid);
         }
         return HookResult.Continue;
@@ -314,7 +314,7 @@ public partial class MatchZy
         if (!isPractice || isDryRun) return HookResult.Continue;
         if(lastGrenadeThrownTime.TryGetValue(@event.Get<int>("entityid"), out var thrownTime)) 
         {
-            PrintToPlayerChat(@event.Userid, $"Molotov thrown by {@event.Userid.PlayerName} took {(DateTime.Now - thrownTime).TotalSeconds:0.00}s to detonate");
+            PrintToPlayerChat(@event.Userid, $"{@event.Userid.PlayerName}投掷了燃烧瓶 引爆时间: {(DateTime.Now - thrownTime).TotalSeconds:0.00}秒");
             lastGrenadeThrownTime.Remove(@event.Get<int>("entityid"));
         }
         return HookResult.Continue;
@@ -325,7 +325,7 @@ public partial class MatchZy
         if (!isPractice || isDryRun) return HookResult.Continue;
         if(lastGrenadeThrownTime.TryGetValue(@event.Entityid, out var thrownTime)) 
         {
-            PrintToPlayerChat(@event.Userid, $"Decoy thrown by {@event.Userid.PlayerName} took {(DateTime.Now - thrownTime).TotalSeconds:0.00}s to detonate");
+            PrintToPlayerChat(@event.Userid, $"{@event.Userid.PlayerName}投掷了燃烧弹 引爆时间: {(DateTime.Now - thrownTime).TotalSeconds:0.00}秒");
             lastGrenadeThrownTime.Remove(@event.Entityid);
         }
         return HookResult.Continue;
