@@ -21,11 +21,11 @@ namespace MatchZy
         public void OnWLCommand(CCSPlayerController? player, CommandInfo? command) {            
             if (IsPlayerAdmin(player, "css_whitelist", "@css/config")) {
                 isWhitelistRequired = !isWhitelistRequired;
-                string WLStatus = isWhitelistRequired ? "Enabled" : "Disabled";
+                string WLStatus = isWhitelistRequired ? "启用" : "禁用";
                 if (player == null) {
                     ReplyToUserCommand(player, $"Whitelist is now {WLStatus}!");
                 } else {
-                    player.PrintToChat($"{chatPrefix} Whitelist is now {ChatColors.Green}{WLStatus}{ChatColors.Default}!");
+                    player.PrintToChat($"{chatPrefix} 白名单现在已 {ChatColors.Green}{WLStatus}{ChatColors.Default}!");
                 }
             } else {
                 SendPlayerNotAdminMessage(player);
@@ -57,10 +57,10 @@ namespace MatchZy
                         playerReadyStatus[player.UserId.Value] = false;
                     }
                     if (playerReadyStatus[player.UserId.Value]) {
-                        player.PrintToChat($"{chatPrefix} You are already ready!");
+                        player.PrintToChat($"{chatPrefix} 你当前已经准备了！");
                     } else {
                         playerReadyStatus[player.UserId.Value] = true;
-                        player.PrintToChat($"{chatPrefix} You have been marked ready!");
+                        player.PrintToChat($"{chatPrefix} 你已被标记为已准备！");
                     }
                     CheckLiveRequired();
                     HandleClanTags();
@@ -78,10 +78,10 @@ namespace MatchZy
                         playerReadyStatus[player.UserId.Value] = false;
                     }
                     if (!playerReadyStatus[player.UserId.Value]) {
-                        player.PrintToChat($"{chatPrefix} You are already unready!");
+                        player.PrintToChat($"{chatPrefix} 你当前已经未准备了！");
                     } else {
                         playerReadyStatus[player.UserId.Value] = false;
-                        player.PrintToChat($"{chatPrefix} You have been marked unready!");
+                        player.PrintToChat($"{chatPrefix}  你已被标记为未准备！");
                     }
                     HandleClanTags();
                 }
@@ -95,7 +95,7 @@ namespace MatchZy
             Log($"[!stay command] {player.UserId}, TeamNum: {player.TeamNum}, knifeWinner: {knifeWinner}, isSideSelectionPhase: {isSideSelectionPhase}");
             if (isSideSelectionPhase) {
                 if (player.TeamNum == knifeWinner) {
-                    Server.PrintToChatAll($"{chatPrefix} {ChatColors.Green}{knifeWinnerName}{ChatColors.Default} has decided to stay!");
+                    Server.PrintToChatAll($"{chatPrefix} {ChatColors.Green}{knifeWinnerName}{ChatColors.Default} 决定留在当前队伍！");
                     StartLive();
                 }
             }
@@ -111,7 +111,7 @@ namespace MatchZy
                 if (player.TeamNum == knifeWinner) {
                     Server.ExecuteCommand("mp_swapteams;");
                     SwapSidesInTeamData(true);
-                    Server.PrintToChatAll($"{chatPrefix} {ChatColors.Green}{knifeWinnerName}{ChatColors.Default} has decided to switch!");
+                    Server.PrintToChatAll($"{chatPrefix} {ChatColors.Green}{knifeWinnerName}{ChatColors.Default} 决定切换双方队伍！");
                     StartLive();
                 }
             }
@@ -153,7 +153,7 @@ namespace MatchZy
             if (isMatchLive && isPaused) {
                 var pauseTeamName = unpauseData["pauseTeam"];
                 if ((string)pauseTeamName == "Admin") {
-                    player?.PrintToChat($"{chatPrefix} Match has been paused by an admin, hence it can be unpaused by an admin only.");
+                    player?.PrintToChat($"{chatPrefix} 比赛已被管理员暂停，只有管理员才能取消暂停。");
                     return;
                 }
 
@@ -176,19 +176,19 @@ namespace MatchZy
                     return;
                 }
                 if ((bool)unpauseData["t"] && (bool)unpauseData["ct"]) {
-                    Server.PrintToChatAll($"{chatPrefix} Both teams has unpaused the match, resuming the match!");
+                    Server.PrintToChatAll($"{chatPrefix} 双方队伍取消了比赛暂停！");
                     Server.ExecuteCommand("mp_unpause_match;");
                     isPaused = false;
                     unpauseData["ct"] = false;
                     unpauseData["t"] = false;
                 } else if (unpauseTeamName == "Admin") {
-                    Server.PrintToChatAll($"{chatPrefix} {ChatColors.Green}{unpauseTeamName}{ChatColors.Default} has unpaused the match, resuming the match!");
+                    Server.PrintToChatAll($"{chatPrefix} {ChatColors.Green}{unpauseTeamName}{ChatColors.Default} 取消了比赛暂停！");
                     Server.ExecuteCommand("mp_unpause_match;");
                     isPaused = false;
                     unpauseData["ct"] = false;
                     unpauseData["t"] = false;
                 } else {
-                    Server.PrintToChatAll($"{chatPrefix} {ChatColors.Green}{unpauseTeamName}{ChatColors.Default} wants to unpause the match. {ChatColors.Green}{remainingUnpauseTeam}{ChatColors.Default}, please write !unpause to confirm.");
+                    Server.PrintToChatAll($"{chatPrefix} {ChatColors.Green}{unpauseTeamName}{ChatColors.Default} 想要取消比赛暂停。 {ChatColors.Green}{remainingUnpauseTeam}{ChatColors.Default}，输入 !unpause 来确定。");
                 }
                 if (!isPaused && pausedStateTimer != null) {
                     pausedStateTimer.Kill();
@@ -205,7 +205,7 @@ namespace MatchZy
                 Log($"[.tac command sent via chat] Sent by: {player.UserId}, connectedPlayers: {connectedPlayers}");
                 if (isPaused)
                 {
-                    ReplyToUserCommand(player, "Match is already paused, cannot start a tactical timeout!");
+                    ReplyToUserCommand(player, "比赛已暂停，无法开始技术暂停！");
                     return;
                 }
                 var gameRules = Utilities.FindAllEntitiesByDesignerName<CCSGameRulesProxy>("cs_gamerules").First().GameRules!;
@@ -213,13 +213,13 @@ namespace MatchZy
                     if (gameRules.TerroristTimeOuts > 0) {
                         Server.ExecuteCommand("timeout_terrorist_start");
                     } else {
-                        ReplyToUserCommand(player, "You do not have any tactical timeouts left!");
+                        ReplyToUserCommand(player, "你没有任何技术暂停次数！");
                     }
                 } else if (player.TeamNum == 3) {
                     if (gameRules.CTTimeOuts > 0) {
                         Server.ExecuteCommand("timeout_ct_start");
                     } else {
-                        ReplyToUserCommand(player, "You do not have any tactical timeouts left!");
+                        ReplyToUserCommand(player, "你没有任何技术暂停次数！");
                     }
                 } 
             }
@@ -230,11 +230,11 @@ namespace MatchZy
         public void OnKnifeCommand(CCSPlayerController? player, CommandInfo? command) {            
             if (IsPlayerAdmin(player, "css_roundknife", "@css/config")) {
                 isKnifeRequired = !isKnifeRequired;
-                string knifeStatus = isKnifeRequired ? "Enabled" : "Disabled";
+                string knifeStatus = isKnifeRequired ? "启用" : "禁用";
                 if (player == null) {
                     ReplyToUserCommand(player, $"Knife round is now {knifeStatus}!");
                 } else {
-                    player.PrintToChat($"{chatPrefix} Knife round is now {ChatColors.Green}{knifeStatus}{ChatColors.Default}!");
+                    player.PrintToChat($"{chatPrefix} 当前拼刀为 {ChatColors.Green}{knifeStatus}{ChatColors.Default}!");
                 }
             } else {
                 SendPlayerNotAdminMessage(player);
@@ -250,7 +250,7 @@ namespace MatchZy
                 }
                 else {
                     string minimumReadyRequiredFormatted = (player == null) ? $"{minimumReadyRequired}" : $"{ChatColors.Green}{minimumReadyRequired}{ChatColors.Default}";
-                    ReplyToUserCommand(player, $"Current Ready Required: {minimumReadyRequiredFormatted} .Usage: !readyrequired <number_of_ready_players_required>");
+                    ReplyToUserCommand(player, $"当前所需已准备玩家数: {minimumReadyRequiredFormatted} .Usage: !readyrequired <number_of_ready_players_required>");
                 }                
             } else {
                 SendPlayerNotAdminMessage(player);
@@ -262,20 +262,20 @@ namespace MatchZy
             if (player == null) return;
 
             if (IsPlayerAdmin(player, "css_settings", "@css/config")) {
-                string knifeStatus = isKnifeRequired ? "Enabled" : "Disabled";
-                string playoutStatus = isPlayOutEnabled ? "Enabled" : "Disabled";
-                player.PrintToChat($"{chatPrefix} Current Settings:");
-                player.PrintToChat($"{chatPrefix} Knife: {ChatColors.Green}{knifeStatus}{ChatColors.Default}");
+                string knifeStatus = isKnifeRequired ? "启用" : "禁用";
+                string playoutStatus = isPlayOutEnabled ? "启用" : "禁用";
+                player.PrintToChat($"{chatPrefix} 当前设置:");
+                player.PrintToChat($"{chatPrefix} 拼刀: {ChatColors.Green}{knifeStatus}{ChatColors.Default}");
                 if (isMatchSetup)
                 {
-                    player.PrintToChat($"{chatPrefix} Minimum Ready Players Required (Per Team): {ChatColors.Green}{matchConfig.MinPlayersToReady}{ChatColors.Default}");
-                    player.PrintToChat($"{chatPrefix} Minimum Ready Spectators Required: {ChatColors.Green}{matchConfig.MinSpectatorsToReady}{ChatColors.Default}");
+                    player.PrintToChat($"{chatPrefix} 每个队伍所需的最低玩家数: {ChatColors.Green}{matchConfig.MinPlayersToReady}{ChatColors.Default}");
+                    player.PrintToChat($"{chatPrefix} 所需最低的已准备的观察者数: {ChatColors.Green}{matchConfig.MinSpectatorsToReady}{ChatColors.Default}");
                 }
                 else
                 {
-                    player.PrintToChat($"{chatPrefix} Minimum Ready Required: {ChatColors.Green}{minimumReadyRequired}{ChatColors.Default}");
+                    player.PrintToChat($"{chatPrefix} 所需最低的已准备的玩家数: {ChatColors.Green}{minimumReadyRequired}{ChatColors.Default}");
                 }
-                player.PrintToChat($"{chatPrefix} Playout: {ChatColors.Green}{playoutStatus}{ChatColors.Default}");
+                player.PrintToChat($"{chatPrefix} 最大回合数: {ChatColors.Green}{playoutStatus}{ChatColors.Default}");
             } else {
                 SendPlayerNotAdminMessage(player);
             }
@@ -286,10 +286,10 @@ namespace MatchZy
         public void OnEndMatchCommand(CCSPlayerController? player, CommandInfo? command) {
             if (IsPlayerAdmin(player, "css_endmatch", "@css/config")) {
                 if (!isPractice) {
-                    Server.PrintToChatAll($"{chatPrefix} An admin force-ended the match.");
+                    Server.PrintToChatAll($"{chatPrefix} 管理员强制结束了比赛。");
                     ResetMatch();
                 } else {
-                    ReplyToUserCommand(player, "Practice mode is active, cannot end the match.");
+                    ReplyToUserCommand(player, "练习模式已启用，无法结束比赛。");
                 }
             } else {
                 SendPlayerNotAdminMessage(player);
@@ -302,7 +302,7 @@ namespace MatchZy
                 if (!isPractice) {
                     ResetMatch();
                 } else {
-                    ReplyToUserCommand(player, "Practice mode is active, cannot restart the match.");
+                    ReplyToUserCommand(player, "练习模式已启用，无法重新开始比赛。");
                 }
             } else {
                 SendPlayerNotAdminMessage(player);
@@ -330,7 +330,7 @@ namespace MatchZy
                 Server.ExecuteCommand($"bot_kick");
                 Server.ExecuteCommand($"changelevel \"{currentMapName}\"");
             } else {
-                ReplyToUserCommand(player, "Invalid map name!");
+                ReplyToUserCommand(player, "无效的地图名字！");
             }
         }
 
@@ -338,13 +338,13 @@ namespace MatchZy
         public void OnStartCommand(CCSPlayerController? player, CommandInfo? command) {
             if (IsPlayerAdmin(player, "css_start", "@css/config")) {
                 if (isPractice) {
-                    ReplyToUserCommand(player, "Cannot start a match while in practice mode. Please use .exitprac command to exit practice mode first!");
+                    ReplyToUserCommand(player, "当处于练习模式时无法开始比赛！请先输入 .exitprac 退出练习模式！");
                     return;
                 }
                 if (matchStarted) {
-                    ReplyToUserCommand(player, "Start command cannot be used if match is already started! If you want to unpause, please use .unpause");
+                    ReplyToUserCommand(player, "比赛开始时无法使用该命令！如果你想取消暂停，请输入 .unpause");
                 } else {
-                    Server.PrintToChatAll($"{chatPrefix} {ChatColors.Green}Admin{ChatColors.Default} has started the game!");
+                    Server.PrintToChatAll($"{chatPrefix} {ChatColors.Green}管理员{ChatColors.Default}开始了比赛。");
                     HandleMatchStart();
                 }
             } else {
@@ -389,7 +389,7 @@ namespace MatchZy
             }
 
             if (matchStarted) {
-                ReplyToUserCommand(player, "MatchZy is already in match mode!");
+                ReplyToUserCommand(player, "当前已经是比赛模式了！");
                 return;
             }
 
@@ -405,7 +405,7 @@ namespace MatchZy
             }
 
             if (matchStarted) {
-                ReplyToUserCommand(player, "MatchZy is already in match mode!");
+                ReplyToUserCommand(player, "当前已经是比赛模式了！");
                 return;
             }
 
@@ -433,11 +433,11 @@ namespace MatchZy
         public void OnPlayoutCommand(CCSPlayerController? player, CommandInfo? command) {            
             if (IsPlayerAdmin(player, "css_playout", "@css/config")) {
                 isPlayOutEnabled = !isPlayOutEnabled;
-                string playoutStatus = isPlayOutEnabled? "Enabled" : "Disabled";
+                string playoutStatus = isPlayOutEnabled? "启用" : "禁用";
                 if (player == null) {
                     ReplyToUserCommand(player, $"Playout is now {playoutStatus}!");
                 } else {
-                    player.PrintToChat($"{chatPrefix} Playout is now {ChatColors.Green}{playoutStatus}{ChatColors.Default}!");
+                    player.PrintToChat($"{chatPrefix} 最大回合数现在为 {ChatColors.Green}{playoutStatus}{ChatColors.Default}！");
                 }
                 
                 if (isPlayOutEnabled) {

@@ -34,17 +34,17 @@ namespace MatchZy
             if (isStopCommandAvailable && isMatchLive) {
                 if (IsHalfTimePhase())
                 {
-                    ReplyToUserCommand(player, "You cannot use this command during halftime.");
+                    ReplyToUserCommand(player, "无法在比赛进行至一半时使用该命令。");
                     return;
                 }
                 if (IsPostGamePhase())
                 {
-                    ReplyToUserCommand(player, "You cannot use this command after the game has ended.");
+                    ReplyToUserCommand(player, "无法在比赛结束后使用该命令。");
                     return;
                 }
                 if (IsTacticalTimeoutActive())
                 {
-                    ReplyToUserCommand(player, "You cannot use this command when tactical timeout is active.");
+                    ReplyToUserCommand(player, "无法在技术暂停时使用该命令。");
                     return;
                 }
                 string stopTeamName = "";
@@ -74,7 +74,7 @@ namespace MatchZy
                     }
 
                 } else {
-                    Server.PrintToChatAll($"{chatPrefix} {ChatColors.Green}{stopTeamName}{ChatColors.Default} wants to restore the game to the beginning of the current round. {ChatColors.Green}{remainingStopTeam}{ChatColors.Default}, please write !stop to confirm.");
+                    Server.PrintToChatAll($"{chatPrefix} {ChatColors.Green}{stopTeamName}{ChatColors.Default} 想要将恢复到当前回合开局。 {ChatColors.Green}{remainingStopTeam}{ChatColors.Default}，输入 !stop 来确定。");
                 }
             }
         }
@@ -119,17 +119,17 @@ namespace MatchZy
         private void RestoreRoundBackup(CCSPlayerController? player, string fileName, string round="") {
             if (IsHalfTimePhase())
             {
-                ReplyToUserCommand(player, "You cannot load a backup during halftime.");
+                ReplyToUserCommand(player, "无法在比赛进行至一半时使用该命令。");
                 return;
             }
             if (IsPostGamePhase())
             {
-                ReplyToUserCommand(player, "You cannot use this command after the game has ended.");
+                ReplyToUserCommand(player, "无法在比赛结束后使用该命令。");
                 return;
             }
             if (IsTacticalTimeoutActive())
             {
-                ReplyToUserCommand(player, "You cannot use this command when tactical timeout is active.");
+                ReplyToUserCommand(player, "无法在技术暂停时使用该命令。");
                 return;
             }
             if (!File.Exists(Path.Join(Server.GameDirectory + "/csgo/", fileName))) {

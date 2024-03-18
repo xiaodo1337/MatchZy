@@ -558,7 +558,7 @@ namespace MatchZy
 
         public void EndSeries(string winnerName, int restartDelay)
         {
-            Server.PrintToChatAll($"{chatPrefix} {ChatColors.Green}{winnerName}{ChatColors.Default} has won the match");
+            Server.PrintToChatAll($"{chatPrefix} {ChatColors.Green}{winnerName}{ChatColors.Default} 获得了比赛的胜利！");
 
             (int t1score, int t2score) = GetTeamsScore();
             var seriesResultEvent = new MatchZySeriesResultEvent()
