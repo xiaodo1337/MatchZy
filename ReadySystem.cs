@@ -103,7 +103,7 @@ public partial class MatchZy
 
         if (playerCount < minReady) 
         {
-            ReplyToUserCommand(player, $"You must have at least {minReady} player(s) on the server to ready up.");
+            ReplyToUserCommand(player, $"服务器至少需要 {minReady} 个玩家才能强制准备.");
             return;
         }
 
@@ -112,7 +112,7 @@ public partial class MatchZy
             if (!playerData[key].IsValid) continue;
             if (playerData[key].TeamNum == player.TeamNum) {
                 playerReadyStatus[key] = true;
-                ReplyToUserCommand(playerData[key], $"Your team was force-readied by {player.PlayerName}");
+                ReplyToUserCommand(playerData[key], $"你的队伍已被 {player.PlayerName} 强制准备");
             }
         }
 
