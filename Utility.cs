@@ -118,7 +118,7 @@ namespace MatchZy
                     string unreadyPlayerList = string.Join(", ", unreadyPlayers);
                     string minimumReadyRequiredMessage = isMatchSetup ? "" : $"[最少需要{ChatColors.Green}{minimumReadyRequired}{ChatColors.Default}名已准备的玩家]";
 
-                    Server.PrintToChatAll($"{chatPrefix} 未准备的玩家: {unreadyPlayerList}。 输入 .ready 来准备！ {minimumReadyRequiredMessage}");
+                    Server.PrintToChatAll($"{chatPrefix} 未准备的玩家: {unreadyPlayerList} 输入 {ChatColors.Green}.ready{ChatColors.Default} 来准备！ {minimumReadyRequiredMessage}");
                 } else {
                     int countOfReadyPlayers = playerReadyStatus.Count(kv => kv.Value == true);
                     if (isMatchSetup)
