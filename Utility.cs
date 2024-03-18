@@ -118,16 +118,16 @@ namespace MatchZy
                     string unreadyPlayerList = string.Join(", ", unreadyPlayers);
                     string minimumReadyRequiredMessage = isMatchSetup ? "" : $"[最少需要{ChatColors.Green}{minimumReadyRequired}{ChatColors.Default}名已准备的玩家]";
 
-                    Server.PrintToChatAll($"{chatPrefix} 未准备的玩家: {unreadyPlayerList} 输入 {ChatColors.Green}.ready{ChatColors.Default} 来准备！ {minimumReadyRequiredMessage}");
+                    Server.PrintToChatAll($"{chatPrefix} 未准备的玩家: {ChatColors.Green}{unreadyPlayerList}{ChatColors.Default} 输入 {ChatColors.Green}.ready{ChatColors.Default} 来准备！ {minimumReadyRequiredMessage}");
                 } else {
                     int countOfReadyPlayers = playerReadyStatus.Count(kv => kv.Value == true);
                     if (isMatchSetup)
                     {
-                        Server.PrintToChatAll($"{chatPrefix} 当前已准备的玩家: {ChatColors.Green}{countOfReadyPlayers}{ChatColors.Default}");
+                        Server.PrintToChatAll($"{chatPrefix} 当前已准备的玩家数：{ChatColors.Green}{countOfReadyPlayers}{ChatColors.Default}");
                     }
                     else
                     {
-                        Server.PrintToChatAll($"{chatPrefix} 最少需要{ChatColors.Green}{minimumReadyRequired}{ChatColors.Default}名已准备的玩家，当前已准备的玩家: {ChatColors.Green}{countOfReadyPlayers}{ChatColors.Default}");
+                        Server.PrintToChatAll($"{chatPrefix} 最少需要{ChatColors.Green}{minimumReadyRequired}{ChatColors.Default}名已准备的玩家，当前已准备的玩家数: {ChatColors.Green}{countOfReadyPlayers}{ChatColors.Default}");
                     }
                 }
             }
